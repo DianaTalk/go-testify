@@ -16,7 +16,8 @@ func TestMainHandlerWhenMissingCity(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 
-	body := responseRecorder.Body.String()
-	assert.NotEqual(t, body, nil)
+	assert.NotEqual(t, responseRecorder.Code, http.StatusBadRequest)
 
+	expected := `wrong city value`
+	assert.NotEqual(t, responseRecorder.Body.String(), expected)
 }
